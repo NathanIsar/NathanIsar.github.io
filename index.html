@@ -157,6 +157,12 @@
             font-size: 4rem;
         }
 
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .project-info {
             padding: 2rem;
         }
@@ -185,6 +191,80 @@
             border-radius: 20px;
             font-size: 0.9rem;
             border: 1px solid rgba(0, 245, 255, 0.3);
+        }
+
+        .demo-button {
+            margin-top: 1.5rem;
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            border: none;
+            color: white;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: block;
+        }
+
+        .demo-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 245, 255, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: relative;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 900px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            color: #fff;
+            font-size: 45px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            z-index: 1001;
+        }
+
+        .close-modal:hover {
+            color: #00f5ff;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 245, 255, 0.3);
+        }
+
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .contact {
@@ -227,6 +307,14 @@
             }
             .projects-grid, .skills-grid {
                 grid-template-columns: 1fr;
+            }
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            .close-modal {
+                top: -40px;
+                font-size: 35px;
             }
         }
     </style>
@@ -282,8 +370,8 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">
-                      <img src="images/ForestBiome.png" alt="Planet Flipper">
-                        </div>
+                        <img src="images/ForestBiome.png" alt="Planet Flipper">
+                    </div>
                     <div class="project-info">
                         <h3 class="project-title">Planet Flipper</h3>
                         <p class="project-description">
@@ -296,6 +384,7 @@
                             <span class="tech-tag">Shaders</span>
                             <span class="tech-tag">FastNoiseLite</span>
                         </div>
+                        <button class="demo-button" onclick="openModal('planet-flipper')">🎬 Voir la démo</button>
                     </div>
                 </div>
 
@@ -304,7 +393,7 @@
                         <img src="images/Moteur2.png" alt="Custom Engine">
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title"> Moteur C++/ DirectX12</h3>
+                        <h3 class="project-title">Moteur C++/ DirectX12</h3>
                         <p class="project-description">
                             Création d'un moteur de jeu personnalisé en C++ utilisant l'api DirectX 12. 
                             Implémentation d'un ECS, système de multiple lightning, Texturing et loader d'obj. 
@@ -316,6 +405,7 @@
                             <span class="tech-tag">HLSL</span>
                             <span class="tech-tag">ECS</span>
                         </div>
+                        <button class="demo-button" onclick="openModal('moteur-dx12')">🎬 Voir la démo</button>
                     </div>
                 </div>
 
@@ -326,25 +416,26 @@
                     <div class="project-info">
                         <h3 class="project-title">Wanderful</h3>
                         <p class="project-description">
-                     Wanderful est un jeu de FPS et de plateforming dans lequel vous devrez utiliser vos bâtons magiques pour progresser.
-                     Chaque bâton possède un élément et influe sur les phases de plateforming et de combat.
-                     Équipez-vous du bon bâton pour atteindre le portail de fin.
-                     Jeu réalisé en une semaine.
+                            Wanderful est un jeu de FPS et de plateforming dans lequel vous devrez utiliser vos bâtons magiques pour progresser.
+                            Chaque bâton possède un élément et influe sur les phases de plateforming et de combat.
+                            Équipez-vous du bon bâton pour atteindre le portail de fin.
+                            Jeu réalisé en une semaine.
                         </p>
                         <div class="tech-tags">
                             <span class="tech-tag">Unity</span>
                             <span class="tech-tag">C#</span>
                             <span class="tech-tag">Nav Mesh AI</span>
                         </div>
+                        <button class="demo-button" onclick="openModal('wanderful')">🎬 Voir la démo</button>
                     </div>
                 </div>
             
-              <div class="project-card">
+                <div class="project-card">
                     <div class="project-image">
                         <img src="images/Casse2.png" alt="Casse">
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title"> RPG Casse-Brique</h3>
+                        <h3 class="project-title">RPG Casse-Brique</h3>
                         <p class="project-description">
                             Création d'un RPG Casse Brique. A l'aide de votre Pad berserker venez à bout de toutes les briques pour pouvoir affronter le boss la Chimère.
                         </p>
@@ -354,10 +445,47 @@
                             <span class="tech-tag">Frag</span>
                             <span class="tech-tag">ECS</span>
                         </div>
+                        <button class="demo-button" onclick="openModal('casse-brique')">🎬 Voir la démo</button>
                     </div>
                 </div>
-             </div>
+            </div>
         </section>
+
+        <div id="modal-planet-flipper" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('planet-flipper')">&times;</span>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-moteur-dx12" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('moteur-dx12')">&times;</span>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-wanderful" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('wanderful')">&times;</span>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-casse-brique" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('casse-brique')">&times;</span>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
 
         <section class="contact">
             <h2>Contact</h2>
@@ -456,6 +584,56 @@
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
+        });
+
+        function openModal(projectId) {
+            document.getElementById('modal-' + projectId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(projectId) {
+            const modal = document.getElementById('modal-' + projectId);
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; 
+            
+            const iframe = modal.querySelector('iframe');
+            if (iframe) {
+                iframe.src = iframe.src;
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal === event.target) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        
+                        const iframe = modal.querySelector('iframe');
+                        if (iframe) {
+                            iframe.src = iframe.src;
+                        }
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        
+                        const iframe = modal.querySelector('iframe');
+                        if (iframe) {
+                            iframe.src = iframe.src;
+                        }
+                    }
+                });
+            }
         });
     </script>
 </body>
