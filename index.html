@@ -140,7 +140,6 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.3s ease;
-            cursor: pointer;
         }
 
         .project-card:hover {
@@ -194,7 +193,7 @@
         }
 
         .demo-button {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             padding: 0.7rem 1.5rem;
             background: linear-gradient(45deg, #00f5ff, #ff00ff);
             border: none;
@@ -266,7 +265,8 @@
             width: 100%;
             height: 100%;
         }
-         .gallery-container {
+
+        .gallery-container {
             position: relative;
             width: 100%;
             max-width: 900px;
@@ -519,18 +519,17 @@
                     </div>
                 </div>
 
-                   <div class="project-card">
+                <div class="project-card">
                     <div class="project-image">
-                        <img src="images/Logo.png" alt="FPS">
+                        <img src="images/Logo.png" alt="Advanced Graphics">
                     </div>
                     <div class="project-info">
-                        <h3 class="project-title"> Advanced graphics programming</h3>
+                        <h3 class="project-title">Advanced Graphics Programming</h3>
                         <p class="project-description">
-                            Ce projet, c'est déroulé durant mon stage de 2 mois pour réalisation d'un moteur custom pour mon école.
-                            mes missions qui m’ont été confiées consistaient principalement à
-                            m’occuper du système d’éclairage (light system) et à l’améliorer
-                            continuellement tout au long du stage, ainsi qu’à travailler sur les
-                            mipmaps et le shadow mapping. Nous étions libre est pouvions ajouter les technologies que l'on désirait (comme subsurface scattering).
+                            Ce projet s'est déroulé durant mon stage de 2 mois pour la réalisation d'un moteur custom pour mon école.
+                            Mes missions consistaient principalement à m'occuper du système d'éclairage (light system) et à l'améliorer
+                            continuellement tout au long du stage, ainsi qu'à travailler sur les mipmaps et le shadow mapping. 
+                            Nous étions libres et pouvions ajouter les technologies que l'on désirait (comme subsurface scattering).
                         </p>
                         <div class="tech-tags">
                             <span class="tech-tag">DirectX12</span>
@@ -540,8 +539,7 @@
                             <span class="tech-tag">Shadow mapping</span>
                             <span class="tech-tag">Mipmap</span>
                         </div>
-                        <button class="demo-button" onclick="openModal('advanced-graphics')">🎬 Voir la démo</button>
-                         <button class="demo-button" onclick="openModal('advanced-graphics2')">📁 Voir la galerie</button>
+                        <button class="demo-button" onclick="openModal('advanced-graphics-gallery')">🖼️ Voir la galerie</button>
                     </div>
                 </div>
             
@@ -593,35 +591,26 @@
             </div>
         </div>
 
-        <div id="modal-advanced-graphics" class="modal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal('advanced-graphics')">&times;</span>
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-advanced-graphics2" class="modal">
-            <div class="modal-content">
-                <span class="close-modal" onclick="closeModal('advanced-graphics2')">&times;</span>
-                <div class="gallery-container">
-                    <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">‹</button>
-                    <img id="gallery-image" class="gallery-image" src="images/gallery/image1.jpg" alt="Advanced Graphics">
-                    <button class="gallery-nav gallery-next" onclick="changeImage(1)">›</button>
-                    <div class="gallery-counter">
-                        <span id="current-image">1</span> / <span id="total-images">5</span>
-                    </div>
-                    <div class="gallery-thumbnails" id="thumbnails"></div>
-                </div>
-            </div>
-        </div>
-
         <div id="modal-casse-brique" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal('casse-brique')">&times;</span>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-advanced-graphics-gallery" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('advanced-graphics-gallery')">&times;</span>
+                <div class="gallery-container">
+                    <button class="gallery-nav gallery-prev" onclick="changeImage(-1)">‹</button>
+                    <img id="gallery-image" class="gallery-image" src="images/Dirsha.png" alt="Advanced Graphics">
+                    <button class="gallery-nav gallery-next" onclick="changeImage(1)">›</button>
+                    <div class="gallery-counter">
+                        <span id="current-image">1</span> / <span id="total-images">5</span>
+                    </div>
+                    <div class="gallery-thumbnails" id="thumbnails"></div>
                 </div>
             </div>
         </div>
@@ -725,15 +714,82 @@
             });
         });
 
+        // Galerie d'images
+        const galleryImages = [
+            'images/Dirsha.png',
+            'images/DirSpot.png',
+            'images/Pointsha.png',
+            'images/oui.png',
+            'images/Light.png'
+        ];
+        
+        let currentImageIndex = 0;
+        
+        function initGallery() {
+            currentImageIndex = 0;
+            updateGalleryImage();
+            createThumbnails();
+        }
+        
+        function updateGalleryImage() {
+            const imgElement = document.getElementById('gallery-image');
+            imgElement.src = galleryImages[currentImageIndex];
+            document.getElementById('current-image').textContent = currentImageIndex + 1;
+            document.getElementById('total-images').textContent = galleryImages.length;
+            
+            const thumbs = document.querySelectorAll('.gallery-thumb');
+            thumbs.forEach((thumb, index) => {
+                if (index === currentImageIndex) {
+                    thumb.classList.add('active');
+                } else {
+                    thumb.classList.remove('active');
+                }
+            });
+        }
+        
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            
+            if (currentImageIndex < 0) {
+                currentImageIndex = galleryImages.length - 1;
+            } else if (currentImageIndex >= galleryImages.length) {
+                currentImageIndex = 0;
+            }
+            
+            updateGalleryImage();
+        }
+        
+        function createThumbnails() {
+            const container = document.getElementById('thumbnails');
+            container.innerHTML = '';
+            
+            galleryImages.forEach((imagePath, index) => {
+                const thumb = document.createElement('img');
+                thumb.src = imagePath;
+                thumb.className = 'gallery-thumb';
+                if (index === 0) thumb.classList.add('active');
+                thumb.onclick = () => {
+                    currentImageIndex = index;
+                    updateGalleryImage();
+                };
+                container.appendChild(thumb);
+            });
+        }
+
+        // Gestion des modals
         function openModal(projectId) {
             document.getElementById('modal-' + projectId).style.display = 'block';
             document.body.style.overflow = 'hidden';
+            
+            if (projectId === 'advanced-graphics-gallery') {
+                initGallery();
+            }
         }
 
         function closeModal(projectId) {
             const modal = document.getElementById('modal-' + projectId);
             modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; 
+            document.body.style.overflow = 'auto';
             
             const iframe = modal.querySelector('iframe');
             if (iframe) {
@@ -773,25 +829,16 @@
                     }
                 });
             }
+            
+            const galleryModal = document.getElementById('modal-advanced-graphics-gallery');
+            if (galleryModal && galleryModal.style.display === 'block') {
+                if (event.key === 'ArrowLeft') {
+                    changeImage(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeImage(1);
+                }
+            }
         });
-         const galleryImages = [
-            'images/Dirsha.png',
-            'images/DirSpot.png',
-            'images/Pointsha.png',
-            'images/oui.png',
-            'images/Light.png'
-        ];
-        
-        let currentImageIndex = 0;
-        
-        function initGallery() {
-            currentImageIndex = 0;
-            updateGalleryImage();
-            createThumbnails();
-        }
-        
-        function updateGalleryImage() {
-            const imgElement = document.getElementByI
     </script>
 </body>
 </html>
