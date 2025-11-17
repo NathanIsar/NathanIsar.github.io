@@ -543,6 +543,48 @@
                         <button class="demo-button" onclick="openModal('advanced-graphics')">🎬 Voir la démo</button>
                     </div>
                 </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/Multijoueur.png" alt="Multijoueur">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title"> Multijoueur</h3>
+                        <p class="project-description">
+                            Ce projet s'est déroulé pendant 2 semaines ou nous devions réalisé un jeu multijoueur avec la libraire winsock.
+                            Pour cela, nous avons créer une architexture Client-Serveur avec des thread qui régissent l'envoie de packet de data.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Winsock</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">SFML</span>
+                            <span class="tech-tag">Architecture multijoueur</span>
+                        </div>
+                        <button class="demo-button" onclick="openModal('Multijoueur')">🎬 Voir la démo</button>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/Diablo2.png" alt="Pacific">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title"> Pacific Island 3003</h3>
+                        <p class="project-description">
+                            Ce projet s'est déroulé pendant 2 semaines, nous avons donc créer de A à Z, un moteur utilisant
+                            la librairie SFML et en implementant un structure ECSS. De plus, nous avons mis la structure de données géométrique
+                            Quatree afin d'optimiser les collisions de nos vague ennemis.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">SFML</span>
+                            <span class="tech-tag">2D isométrique</span>
+                            <span class="tech-tag">ECSS</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Quadtree</span>
+                        </div>
+                        <button class="demo-button" onclick="openModal('Pacific')">🎬 Voir la démo</button>
+                    </div>
+                </div>
             
                 <div class="project-card">
                     <div class="project-image">
@@ -604,6 +646,24 @@
            <div id="modal-advanced-graphics" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal('advanced-graphics')">&times;</span>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+          <div id="modal-Multijoueur" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('Multijoueur')">&times;</span>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <div id="modal-Pacific" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('Pacific')">&times;</span>
                 <div class="video-container">
                     <iframe src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
