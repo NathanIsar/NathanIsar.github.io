@@ -611,9 +611,15 @@
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal('planet-flipper')">&times;</span>
                 <div class="video-container">
-                    <video controls preload="auto" style="background: #000;">
+                    <video controls preload="auto" style="background: #000; width: 100%; height: 100%;">
                         <source src="images/Planet.mp4" type="video/mp4">
-                        <p style="color: white; padding: 20px;">Votre navigateur ne supporte pas la balise vidéo ou la vidéo n'a pas pu être chargée.</p>
+                        <p style="color: white; padding: 20px; text-align: center;">
+                            ❌ La vidéo ne peut pas être chargée.<br><br>
+                            Assurez-vous que:<br>
+                            • Le fichier "Planet.mp4" existe dans le dossier "images/"<br>
+                            • Le fichier est un vrai MP4 (codec H.264)<br>
+                            • Vous utilisez un serveur local (pas file:///)
+                        </p>
                     </video>
                 </div>
             </div>
