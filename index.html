@@ -434,7 +434,7 @@
                 <div class="skill-card">
                     <div class="skill-icon">🎮</div>
                     <h3>Game Development</h3>
-                    <p>Unity, Game Design, Gameplay Programming</p>
+                    <p>Unity, Unreal Engine, Game Design, Gameplay Programming</p>
                 </div>
                 <div class="skill-card">
                     <div class="skill-icon">🎨</div>
@@ -605,6 +605,48 @@
                     </div>
                 </div>
             </div>
+
+             <div class="project-card">
+                    <div class="project-image">
+                    <img src="images/Casse2.png" alt="Casse">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title"> dungeon knight</h3>
+                        <p class="project-description">
+                            Création d'un jeu d'égnime/parcours sur Unreal Engine 5.6.1. Le but était d'apprendre a bien gérer le lien entre C++ et blueprint, en créant une interface C++ et des sytème en C++
+                            pour en faire dériver des blueprints et créer la logique de gameplay à l'intérieur des blueprints.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Unreal Engine</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Blueprints</span>
+                        </div>
+                        <button class="demo-button" onclick="openModal('Unreal')">🎬 Voir la démo</button>
+                    </div>
+                </div>
+            </div>
+
+           <div class="project-card">
+                    <div class="project-image">
+                    <img src="images/Casse2.png" alt="Casse">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title"> Dragon mauve</h3>
+                        <p class="project-description">
+                            Mise place d'un 3C dans Unity en utilisant cinemachine pour créer des effets de caméra comme un focus lorsque l'on parle à un pnj ou autre, mais aussi le new input afin d'assurer une compatibilité et une flexibilité
+                            avec ton type de support. C'est un jeux d'aventure, on nous contrôlons un petit dragon mauve et nous devons passer par des portails pour réalisé diverses défis et ramener les critsaux à la fée pour sauver le monde de skylands.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Unity</span>
+                            <span class="tech-tag">C#</span>
+                            <span class="tech-tag">Cinemachine</span>
+                            <span class="tech-tag"> New input system</span>
+                            <span class="tech-tag"> 3C </span>
+                        </div>
+                        <button class="demo-button" onclick="openModal('3C')">🎬 Voir la démo</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
 <div id="modal-planet-flipper" class="modal">
@@ -697,6 +739,30 @@
             </div>
         </div>
 
+           <div id="modal-3C" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('3C')">&times;</span>
+                <div class="video-container">
+                    <video controls preload="auto" style="background: #000;">
+                        <source src="" type="video/mp4">
+                        <p style="color: white; padding: 20px;">Votre navigateur ne supporte pas la balise vidéo ou la vidéo n'a pas pu être chargée.</p>
+                    </video>
+                </div>
+            </div>
+        </div>
+
+               <div id="modal-Unreal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('Unreal')">&times;</span>
+                <div class="video-container">
+                    <video controls preload="auto" style="background: #000;">
+                        <source src="" type="video/mp4">
+                        <p style="color: white; padding: 20px;">Votre navigateur ne supporte pas la balise vidéo ou la vidéo n'a pas pu être chargée.</p>
+                    </video>
+                </div>
+            </div>
+        </div>
+    
         <div id="modal-advanced-graphics-gallery" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal('advanced-graphics-gallery')">&times;</span>
