@@ -624,6 +624,31 @@
                     </div>
                 </div>
 
+                 <div class="project-card">
+                    <div class="project-image">
+                    <img src="images/Enigme.png" alt="Physics">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title"> Physics birds</h3>
+                        <p class="project-description">
+                            Création d'un jeu style angry birds sur Unreal Engine 5.6.1. Le but était d'apprendre a bien gérer la physique du moteur en implémentant des matériaux
+                            avec des caractéristiques différentes et ensuite le chaos system pour les rendre destructible. Nous avons aussi exploité le field system pour créer des effets physique
+                            comme une explosion et un trou noir comme capacité spéciale pour les oiseaux, ainsi qu'un field pour effectuer un dash dans les niveaux.
+                            Le physics constraint nous a permit lui de créer des element de gameplay dans les niveaux comme un pont levis, un bumper et autres.
+                        </p>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Unreal Engine</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Blueprints</span>
+                            <span class="tech-tag">Chaos system</span>
+                            <span class="tech-tag">Fracture</span>
+                            <span class="tech-tag">Field System</span>
+                            <span class="tech-tag"> Physics constraints/ materials</span>
+                        </div>
+                        <button class="demo-button" onclick="openModal('Physics')">🎬 Voir la démo</button>
+                    </div>
+                </div>
+
            <div class="project-card">
                     <div class="project-image">
                     <img src="images/DragonMauve.png" alt="3C">
@@ -752,6 +777,18 @@
                <div id="modal-Unreal" class="modal">
             <div class="modal-content">
                 <span class="close-modal" onclick="closeModal('Unreal')">&times;</span>
+                <div class="video-container">
+                    <video controls preload="auto" style="background: #000;">
+                        <source src="" type="video/mp4">
+                        <p style="color: white; padding: 20px;">Votre navigateur ne supporte pas la balise vidéo ou la vidéo n'a pas pu être chargée.</p>
+                    </video>
+                </div>
+            </div>
+        </div>
+
+                <div id="modal-Physics" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('Physics')">&times;</span>
                 <div class="video-container">
                     <video controls preload="auto" style="background: #000;">
                         <source src="" type="video/mp4">
