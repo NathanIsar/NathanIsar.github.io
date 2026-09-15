@@ -696,7 +696,7 @@
 
                   <div class="project-card">
                     <div class="project-image">
-                    <img src="ligefeu.png" alt="Physics">
+                    <img src="ligefeu.png" alt="DS">
                     </div>
                     <div class="project-info">
                         <h3 class="project-title"> LigeFeu</h3>
@@ -715,7 +715,7 @@
                             <span class="tech-tag"> Level Design</span>
                             <span class="tech-tag"> Blender </span>
                         </div>
-                        <button class="demo-button" onclick="openModal('Physics')">🎬 Video</button>
+                        <button class="demo-button" onclick="openModal('Ligefeu')">🎬 Video</button>
                     </div>
                 </div>
             </div>   
@@ -727,13 +727,6 @@
                 <div class="video-container">
                     <video controls preload="auto" style="background: #000; width: 100%; height: 100%;">
                         <source src="images/Planet.mp4" type="video/mp4">
-                        <p style="color: white; padding: 20px; text-align: center;">
-                            ❌ La vidéo ne peut pas être chargée.<br><br>
-                            Assurez-vous que:<br>
-                            • Le fichier "Planet.mp4" existe dans le dossier "images/"<br>
-                            • Le fichier est un vrai MP4 (codec H.264)<br>
-                            • Vous utilisez un serveur local (pas file:///)
-                        </p>
                     </video>
                 </div>
             </div>
@@ -864,6 +857,21 @@
                         <span id="current-image">1</span> / <span id="total-images">5</span>
                     </div>
                     <div class="gallery-thumbnails" id="thumbnails"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-Ligefeu" class="modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeModal('Ligefeu')">&times;</span>
+                <div class="video-container">
+                   <iframe  
+                       src="https://youtu.be/kEBb-ZbG-O4" 
+                       title="Titre de la vidéo"
+                       frameborder="0"
+                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                       allowfullscreen>
+               </iframe>
                 </div>
             </div>
         </div>
