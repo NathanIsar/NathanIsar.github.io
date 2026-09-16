@@ -2,9 +2,23 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="Nathan Isarte" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio - Game/Graphics Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --void: #050403;
+            --void-deep: #000000;
+            --blood: #b3121c;
+            --blood-dark: #6e0d14;
+            --blood-bright: #ff2d3a;
+            --ember: #ff7a3c;
+            --bone: #e8ddd0;
+            --bone-dim: #a89a8c;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,10 +26,16 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0e27;
-            color: #fff;
+            font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+            background: radial-gradient(ellipse at 50% 30%, #0d0806 0%, var(--void) 55%, var(--void-deep) 100%);
+            color: var(--bone);
             overflow-x: hidden;
+        }
+
+        h3 {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            letter-spacing: 0.02em;
         }
 
         canvas {
@@ -25,9 +45,138 @@
             z-index: 0;
         }
 
+        .fog-layer {
+            position: fixed;
+            inset: -15%;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(ellipse 55% 40% at 18% 82%, rgba(130, 16, 16, 0.22), transparent 62%),
+                radial-gradient(ellipse 50% 35% at 88% 12%, rgba(100, 12, 12, 0.18), transparent 65%),
+                radial-gradient(ellipse 45% 32% at 78% 88%, rgba(80, 10, 10, 0.16), transparent 60%),
+                radial-gradient(ellipse 40% 30% at 8% 15%, rgba(90, 12, 12, 0.14), transparent 60%);
+            filter: blur(45px);
+            animation: fogDrift 75s ease-in-out infinite alternate;
+        }
+
+        @keyframes fogDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-2.5%, 1.5%) scale(1.06); }
+            100% { transform: translate(2.5%, -1.5%) scale(1); }
+        }
+
+        .grain-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.05;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+        }
+
+        .ruins-silhouette {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 22vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .ruins-silhouette svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .ruins-back {
+            filter: drop-shadow(0 -6px 24px rgba(255, 45, 58, 0.08));
+        }
+
+        .ruins-front {
+            filter: drop-shadow(0 -4px 18px rgba(255, 45, 58, 0.14));
+        }
+
+        #eclipse-wrap {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .eclipse-corona {
+            position: absolute;
+            inset: -70px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg,
+                transparent 0deg, rgba(255, 45, 58, 0.35) 8deg, transparent 18deg,
+                transparent 50deg, rgba(255, 45, 58, 0.22) 58deg, transparent 68deg,
+                transparent 100deg, rgba(255, 122, 60, 0.28) 110deg, transparent 122deg,
+                transparent 155deg, rgba(255, 45, 58, 0.3) 165deg, transparent 175deg,
+                transparent 205deg, rgba(255, 45, 58, 0.22) 213deg, transparent 224deg,
+                transparent 260deg, rgba(255, 122, 60, 0.26) 270deg, transparent 282deg,
+                transparent 315deg, rgba(255, 45, 58, 0.32) 325deg, transparent 336deg,
+                transparent 360deg);
+            filter: blur(7px);
+            animation: coronaSpin 50s linear infinite;
+            opacity: 0.85;
+        }
+
+        .eclipse-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            box-shadow:
+                0 0 22px 5px rgba(255, 45, 58, 0.95),
+                0 0 52px 15px rgba(179, 18, 28, 0.65),
+                0 0 110px 38px rgba(179, 18, 28, 0.38);
+            animation: eclipseFlicker 3.4s ease-in-out infinite;
+        }
+
+        .eclipse-core {
+            position: absolute;
+            inset: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 36% 34%, #1c1c1c 0%, #060606 55%, #000 100%);
+            box-shadow: inset 0 0 40px 12px rgba(0, 0, 0, 0.9);
+        }
+
+        @keyframes eclipseFlicker {
+            0%, 100% {
+                box-shadow:
+                    0 0 22px 5px rgba(255, 45, 58, 0.95),
+                    0 0 52px 15px rgba(179, 18, 28, 0.65),
+                    0 0 110px 38px rgba(179, 18, 28, 0.38);
+            }
+            45% {
+                box-shadow:
+                    0 0 30px 8px rgba(255, 90, 90, 1),
+                    0 0 68px 22px rgba(200, 30, 40, 0.8),
+                    0 0 130px 46px rgba(179, 18, 28, 0.48);
+            }
+            70% {
+                box-shadow:
+                    0 0 18px 4px rgba(255, 45, 58, 0.8),
+                    0 0 44px 12px rgba(179, 18, 28, 0.55),
+                    0 0 88px 28px rgba(179, 18, 28, 0.3);
+            }
+        }
+
+        @keyframes coronaSpin {
+            to { transform: rotate(360deg); }
+        }
+
         .content {
             position: relative;
-            z-index: 1;
+            z-index: 3;
         }
 
         header {
@@ -41,13 +190,17 @@
         }
 
         h1 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            letter-spacing: 0.03em;
             font-size: 4rem;
-            background: linear-gradient(45deg, #00f5ff, #ff00ff, #00ff88);
+            background: linear-gradient(45deg, var(--blood-bright), var(--blood-dark), var(--ember));
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradient 3s ease infinite;
+            animation: gradient 5s ease infinite;
             margin-bottom: 1rem;
+            text-shadow: 0 0 60px rgba(255, 45, 58, 0.25);
         }
 
         @keyframes gradient {
@@ -57,8 +210,10 @@
         }
 
         .subtitle {
-            font-size: 1.5rem;
-            color: #00f5ff;
+            font-style: italic;
+            font-size: 1.4rem;
+            letter-spacing: 0.02em;
+            color: var(--ember);
             margin-bottom: 2rem;
             opacity: 0;
             animation: fadeIn 1s ease 0.5s forwards;
@@ -69,20 +224,23 @@
         }
 
         .cta-button {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.04em;
             padding: 1rem 2rem;
-            background: linear-gradient(45deg, #00f5ff, #ff00ff);
-            border: none;
-            color: white;
-            font-size: 1.1rem;
+            background: linear-gradient(45deg, var(--blood), var(--blood-dark));
+            border: 1px solid rgba(255, 45, 58, 0.5);
+            color: var(--bone);
+            font-size: 1rem;
             cursor: pointer;
             border-radius: 50px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-decoration: none;
             display: inline-block;
         }
 
         .cta-button:hover {
-            transform: scale(1.1);
+            transform: scale(1.08);
+            box-shadow: 0 0 30px rgba(255, 45, 58, 0.45);
         }
 
         section {
@@ -92,10 +250,13 @@
         }
 
         h2 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            letter-spacing: 0.03em;
             font-size: 3rem;
             margin-bottom: 3rem;
             text-align: center;
-            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            background: linear-gradient(45deg, var(--blood-bright), var(--blood-dark));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -108,17 +269,18 @@
         }
 
         .skill-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(30, 20, 17, 0.5);
             backdrop-filter: blur(10px);
             padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 45, 58, 0.18);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .skill-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 40px rgba(0, 245, 255, 0.3);
+            border-color: rgba(255, 45, 58, 0.4);
+            box-shadow: 0 10px 40px rgba(255, 45, 58, 0.3);
         }
 
         .skill-icon {
@@ -135,22 +297,24 @@
         }
 
         .project-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(30, 20, 17, 0.5);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 6px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 45, 58, 0.18);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .project-card:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            border-color: rgba(255, 45, 58, 0.4);
+            box-shadow: 0 10px 40px rgba(255, 45, 58, 0.25);
         }
 
         .project-image {
             width: 100%;
             height: 250px;
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            background: linear-gradient(45deg, #1a1210, #0e0908);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -168,13 +332,13 @@
         }
 
         .project-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 1rem;
-            color: #00f5ff;
+            color: var(--blood-bright);
         }
 
         .project-description {
-            color: #ccc;
+            color: var(--bone-dim);
             line-height: 1.6;
         }
 
@@ -186,20 +350,47 @@
         }
 
         .tech-tag {
-            background: rgba(0, 245, 255, 0.2);
+            font-family: 'Crimson Pro', serif;
+            background: rgba(255, 45, 58, 0.15);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
             font-size: 0.9rem;
-            border: 1px solid rgba(0, 245, 255, 0.3);
+            border: 1px solid rgba(255, 45, 58, 0.32);
+            color: var(--bone);
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .book-author {
+            font-style: italic;
+            color: var(--ember);
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .insight-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            color: var(--blood-bright);
+            display: block;
+            margin-bottom: 0.3rem;
         }
 
         .demo-button {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.03em;
             margin-top: 1rem;
             padding: 0.7rem 1.5rem;
-            background: linear-gradient(45deg, #00f5ff, #ff00ff);
-            border: none;
-            color: white;
-            font-size: 0.95rem;
+            background: linear-gradient(45deg, var(--blood), var(--blood-dark));
+            border: 1px solid rgba(255, 45, 58, 0.4);
+            color: var(--bone);
+            font-size: 0.85rem;
             font-weight: 600;
             cursor: pointer;
             border-radius: 25px;
@@ -210,7 +401,7 @@
 
         .demo-button:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(0, 245, 255, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 45, 58, 0.4);
         }
 
         .modal {
@@ -245,7 +436,7 @@
         }
 
         .close-modal:hover {
-            color: #00f5ff;
+            color: var(--blood-bright);
         }
 
         .video-container {
@@ -255,7 +446,7 @@
             overflow: hidden;
             background: #000;
             border-radius: 10px;
-            border: 2px solid rgba(0, 245, 255, 0.3);
+            border: 2px solid rgba(255, 45, 58, 0.3);
         }
 
         .video-container iframe,
@@ -280,14 +471,14 @@
             max-height: 70vh;
             object-fit: contain;
             border-radius: 10px;
-            border: 2px solid rgba(0, 245, 255, 0.3);
+            border: 2px solid rgba(255, 45, 58, 0.3);
         }
 
         .gallery-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 245, 255, 0.3);
+            background: rgba(255, 45, 58, 0.3);
             color: white;
             border: none;
             font-size: 2rem;
@@ -299,7 +490,7 @@
         }
 
         .gallery-nav:hover {
-            background: rgba(0, 245, 255, 0.6);
+            background: rgba(255, 45, 58, 0.6);
             transform: translateY(-50%) scale(1.1);
         }
 
@@ -313,7 +504,7 @@
 
         .gallery-counter {
             text-align: center;
-            color: #00f5ff;
+            color: var(--blood-bright);
             font-size: 1.2rem;
             margin-top: 1rem;
         }
@@ -339,12 +530,12 @@
 
         .gallery-thumb:hover {
             opacity: 1;
-            border-color: #00f5ff;
+            border-color: var(--ember);
         }
 
         .gallery-thumb.active {
             opacity: 1;
-            border-color: #ff00ff;
+            border-color: var(--blood-bright);
         }
 
         .contact {
@@ -362,19 +553,21 @@
         .social-link {
             width: 60px;
             height: 60px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 45, 58, 0.1);
+            border: 1px solid rgba(255, 45, 58, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            color: white;
+            color: var(--bone);
             font-size: 1.5rem;
             transition: all 0.3s ease;
         }
 
         .social-link:hover {
-            background: linear-gradient(45deg, #00f5ff, #ff00ff);
+            background: linear-gradient(45deg, var(--blood), var(--blood-dark));
+            box-shadow: 0 0 25px rgba(255, 45, 58, 0.4);
             transform: translateY(-5px);
         }
 
@@ -406,12 +599,36 @@
             .gallery-next {
                 right: 10px;
             }
+            #eclipse-wrap {
+                width: 190px;
+                height: 190px;
+                top: 42%;
+            }
         }
     </style>
 </head>
 <body>
     <canvas id="bgCanvas"></canvas>
-    
+    <div class="fog-layer" aria-hidden="true"></div>
+    <div class="grain-overlay" aria-hidden="true"></div>
+
+    <div class="ruins-silhouette" aria-hidden="true">
+        <svg class="ruins-back" viewBox="0 0 1440 240" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#170908" fill-opacity="0.55"
+                d="M0,240 L0,190 L60,150 L110,185 L160,120 L200,160 L260,95 L300,145 L360,115 L410,175 L470,130 L520,185 L580,110 L630,155 L690,100 L740,165 L800,125 L860,180 L920,115 L970,150 L1020,95 L1080,150 L1140,180 L1200,115 L1260,155 L1320,100 L1380,165 L1440,140 L1440,240 Z" />
+        </svg>
+        <svg class="ruins-front" viewBox="0 0 1440 240" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#020101" fill-opacity="0.92"
+                d="M0,240 L0,215 L45,195 L85,220 L130,175 L165,205 L215,160 L255,200 L305,170 L345,210 L400,185 L440,220 L495,165 L535,200 L590,155 L635,210 L690,180 L740,215 L800,170 L850,205 L905,160 L955,205 L1010,185 L1065,215 L1120,175 L1170,205 L1225,165 L1270,210 L1325,185 L1375,220 L1440,200 L1440,240 Z" />
+        </svg>
+    </div>
+
+    <div id="eclipse-wrap" aria-hidden="true">
+        <div class="eclipse-corona"></div>
+        <div class="eclipse-ring"></div>
+        <div class="eclipse-core"></div>
+    </div>
+
     <div class="content">
         <header>
             <h1>Nathan Isarte</h1>
@@ -421,7 +638,7 @@
 
         <section id="about">
             <h2>About me </h2>
-            <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; max-width: 800px; margin: 0 auto; color: #ccc;">
+            <p style="text-align: center; font-size: 1.2rem; line-height: 1.8; max-width: 800px; margin: 0 auto; color: var(--bone-dim);">
                 Graduated student passionate about video game development and graphics.
                 I love creating immersive interactive experiences and exploring the latest graphic rendering technologies. 
                 My goal is to combine creativity and technical skills to bring captivating worlds to life.
@@ -450,6 +667,87 @@
                     <div class="skill-icon">🔧</div>
                     <h3>Tools & Software</h3>
                     <p>Blender, Git, XNormal, Materialize</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="learning">
+            <h2>Éveil technologique</h2>
+            <p style="text-align: center; font-style: italic; color: var(--bone-dim); max-width: 700px; margin: 0 auto 1rem; line-height: 1.6;">
+                Quelques lectures qui ont nourri ma façon de penser l'architecture, le rendu et le code.
+            </p>
+            <!-- Remplace les 5 entrées ci-dessous par tes vrais livres/ressources.
+                 Dépose tes couvertures dans images/books/ et mets à jour les src.
+                 Le texte "Ce que j'en retiens" est un exemple à remplacer par ton vrai retour. -->
+            <div class="books-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/books/game-programming-patterns.jpg" alt="Game Programming Patterns" onerror="this.style.display='none'">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Game Programming Patterns</h3>
+                        <p class="book-author">Robert Nystrom</p>
+                        <p class="project-description">
+                            <span class="insight-label">Ce que j'en retiens :</span>
+                            [à remplacer] Ex. a clarifié comment découpler mes systèmes de gameplay de mon ECS.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/books/game-engine-architecture.jpg" alt="Game Engine Architecture" onerror="this.style.display='none'">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Game Engine Architecture</h3>
+                        <p class="book-author">Jason Gregory</p>
+                        <p class="project-description">
+                            <span class="insight-label">Ce que j'en retiens :</span>
+                            [à remplacer] Ex. une meilleure vue d'ensemble des couches d'un moteur, utile pour structurer GoldenAge.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/books/effective-modern-cpp.jpg" alt="Effective Modern C++" onerror="this.style.display='none'">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Effective Modern C++</h3>
+                        <p class="book-author">Scott Meyers</p>
+                        <p class="project-description">
+                            <span class="insight-label">Ce que j'en retiens :</span>
+                            [à remplacer] Ex. de meilleures habitudes autour du move semantics et de la gestion mémoire.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/books/data-oriented-design.jpg" alt="Data-Oriented Design" onerror="this.style.display='none'">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Data-Oriented Design</h3>
+                        <p class="book-author">Richard Fabian</p>
+                        <p class="project-description">
+                            <span class="insight-label">Ce que j'en retiens :</span>
+                            [à remplacer] Ex. a pesé sur mon choix d'architecture ECS (sparse set + flat array).
+                        </p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="images/books/real-time-rendering.jpg" alt="Real-Time Rendering" onerror="this.style.display='none'">
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">Real-Time Rendering</h3>
+                        <p class="book-author">Akenine-Möller, Haines, Hoffman</p>
+                        <p class="project-description">
+                            <span class="insight-label">Ce que j'en retiens :</span>
+                            [à remplacer] Ex. référence pour approfondir le PBR et le shadow mapping vus en stage.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -921,27 +1219,92 @@
         canvas.height = window.innerHeight;
 
         const particles = [];
-        const particleCount = 100;
+        const particleCount = 110;
+        const groundEmberCount = 55;
+
+        // Position de l'éclipse à l'écran (centrée, comme #eclipse-wrap)
+        function eclipseCenter() {
+            return {
+                x: canvas.width / 2,
+                y: window.innerHeight / 2
+            };
+        }
 
         class Particle {
             constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.5;
-                this.vy = (Math.random() - 0.5) * 0.5;
-                this.size = Math.random() * 2 + 1;
+                this.reset(true);
+            }
+
+            reset(initial) {
+                const center = eclipseCenter();
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 140 + Math.random() * 30;
+                this.x = center.x + Math.cos(angle) * radius;
+                this.y = center.y + Math.sin(angle) * radius;
+
+                const speed = 0.25 + Math.random() * 0.5;
+                this.vx = Math.cos(angle) * speed * 0.35 + (Math.random() - 0.5) * 0.15;
+                this.vy = Math.sin(angle) * speed * 0.35 - 0.25 - Math.random() * 0.25;
+
+                this.size = Math.random() * 1.8 + 0.6;
+                this.life = initial ? Math.random() * 260 : 0;
+                this.maxLife = 220 + Math.random() * 220;
+                this.color = Math.random() < 0.5 ? '255, 60, 60' : '200, 40, 30';
             }
 
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
+                this.life++;
 
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                if (this.life > this.maxLife ||
+                    this.x < -60 || this.x > canvas.width + 60 ||
+                    this.y < -60 || this.y > canvas.height + 60) {
+                    this.reset(false);
+                }
             }
 
             draw() {
-                ctx.fillStyle = 'rgba(0, 245, 255, 0.5)';
+                const t = this.life / this.maxLife;
+                const alpha = Math.sin(Math.min(t, 1) * Math.PI) * 0.85;
+                ctx.fillStyle = `rgba(${this.color}, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Braises qui montent depuis le bas de l'écran, comme un sol qui fume
+        class GroundEmber {
+            constructor() {
+                this.reset(true);
+            }
+
+            reset(initial) {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 30;
+                this.vx = (Math.random() - 0.5) * 0.15;
+                this.vy = -(0.15 + Math.random() * 0.35);
+                this.size = Math.random() * 1.6 + 0.5;
+                this.life = initial ? Math.random() * 300 : 0;
+                this.maxLife = 260 + Math.random() * 280;
+                this.color = Math.random() < 0.5 ? '255, 90, 40' : '210, 40, 30';
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life++;
+
+                if (this.life > this.maxLife || this.y < canvas.height * 0.35) {
+                    this.reset(false);
+                }
+            }
+
+            draw() {
+                const t = this.life / this.maxLife;
+                const alpha = Math.sin(Math.min(t, 1) * Math.PI) * 0.7;
+                ctx.fillStyle = `rgba(${this.color}, ${alpha})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
@@ -951,32 +1314,18 @@
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle());
         }
+        for (let i = 0; i < groundEmberCount; i++) {
+            particles.push(new GroundEmber());
+        }
 
         function animate() {
-            ctx.fillStyle = 'rgba(10, 14, 39, 0.1)';
+            ctx.fillStyle = 'rgba(5, 4, 3, 0.14)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             particles.forEach(particle => {
                 particle.update();
                 particle.draw();
             });
-
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < 100) {
-                        ctx.strokeStyle = `rgba(0, 245, 255, ${0.2 * (1 - distance / 100)})`;
-                        ctx.lineWidth = 1;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
 
             requestAnimationFrame(animate);
         }
